@@ -14,7 +14,7 @@ btnOwner.addEventListener("click", () => {
 });
 
 btnResident.addEventListener("click", () => {
-    exitTo("./resident/resident_signup.html");
+    exitTo("./Resident-SIgnUp/resident.html");
 });
 
 backBtn.addEventListener("click", () => {

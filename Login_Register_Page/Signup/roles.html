@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VISTA-HR | Choose Role</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="roles.css" />
+</head>
+
+<body>
+    <!-- BG -->
+    <div class="bg">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="grid"></div>
+    </div>
+
+    <!-- Small brand top-left -->
+    <header class="mini-header">
+        <div class="mini-brand">
+            <span class="mini-logo"><i data-lucide="building-2"></i></span>
+            <span class="mini-text">VISTA<span>-HR</span></span>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <section class="hero">
+            <p class="pill">
+                <i data-lucide="sparkles"></i>
+                Let’s personalize your experience
+            </p>
+
+            <h1>How do you want to use <span>VISTA-HR</span>?</h1>
+            <p class="sub">Choose your role so we can show the right features for you.</p>
+        </section>
+
+        <section class="cards">
+            <!-- Property Owner -->
+            <article class="role-card" id="btnOwner" tabindex="0">
+                <div class="role-head">
+                    <div class="icon-wrap owner">
+                        <i data-lucide="key-round"></i>
+                    </div>
+
+                    <div class="role-title">
+                        <h2>Property Owner</h2>
+                        <p>Create and manage listings, upload images and 360° tours, track bookings, monitor
+                            availability, and generate reports.</p>
+                    </div>
+
+                    <button class="go" type="button" aria-label="Continue as Property Owner">
+                        <i data-lucide="arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="chips">
+                    <span class="chip"><i data-lucide="layout-dashboard"></i> Manage listings</span>
+                    <span class="chip"><i data-lucide="image-plus"></i> Upload media</span>
+                    <span class="chip"><i data-lucide="calendar-check"></i> Track bookings</span>
+                    <span class="chip"><i data-lucide="activity"></i> Real-time status</span>
+                    <span class="chip"><i data-lucide="bell"></i> Auto notify</span>
+                    <span class="chip"><i data-lucide="bar-chart-3"></i> Reports</span>
+                </div>
+            </article>
+
+            <!-- Resident -->
+            <article class="role-card" id="btnResident" tabindex="0">
+                <div class="role-head">
+                    <div class="icon-wrap resident">
+                        <i data-lucide="search"></i>
+                    </div>
+
+                    <div class="role-title">
+                        <h2>Resident</h2>
+                        <p>Browse available rooms, explore 360° virtual tours, send inquiries, and manage your booking
+                            details.</p>
+                    </div>
+
+                    <button class="go" type="button" aria-label="Continue as Resident">
+                        <i data-lucide="arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="chips">
+                    <span class="chip"><i data-lucide="grid-2x2"></i> View listings</span>
+                    <span class="chip"><i data-lucide="orbit"></i> 360° tours</span>
+                    <span class="chip"><i data-lucide="bell"></i> Notifications</span>
+                    <span class="chip"><i data-lucide="messages-square"></i> Inquiries</span>
+                </div>
+            </article>
+        </section>
+
+        <div class="footer-row">
+            <button class="back" id="backBtn" type="button">
+                <i data-lucide="arrow-left"></i> Back
+            </button>
+
+            <p class="small-note">You can change this later in settings.</p>
+        </div>
+    </main>
+
+    <script src="roles.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>
