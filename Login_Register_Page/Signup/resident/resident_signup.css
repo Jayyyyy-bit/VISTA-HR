@@ -294,6 +294,27 @@ h1 {
     transform: rotate(-3deg) scale(1.06);
 }
 
+.social-btn.google:hover {
+    border-color: rgba(234, 67, 53, 0.35);
+    box-shadow: 0 20px 50px rgba(234, 67, 53, 0.12);
+}
+
+.social-btn.google .sicon {
+    background: rgba(234, 67, 53, 0.08);
+    border-color: rgba(234, 67, 53, 0.18);
+}
+
+.social-btn.facebook:hover {
+    border-color: rgba(24, 119, 242, 0.35);
+    box-shadow: 0 20px 50px rgba(24, 119, 242, 0.12);
+}
+
+.social-btn.facebook .sicon {
+    background: rgba(24, 119, 242, 0.08);
+    border-color: rgba(24, 119, 242, 0.18);
+}
+
+
 .divider {
     margin: 18px 0;
     display: flex;
@@ -332,6 +353,11 @@ h1 {
     text-transform: uppercase;
 }
 
+.field.shake {
+    animation: shake 0.35s ease;
+}
+
+
 .input {
     width: 100%;
     margin-top: 6px;
@@ -354,32 +380,35 @@ h1 {
     position: relative;
 }
 
+.pass-wrap .input {
+    padding-right: 56px;
+}
+
 .eye {
     position: absolute;
-    right: 10px;
     top: 50%;
+    right: 10px;
     transform: translateY(-50%);
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border-radius: 14px;
-    border: 1px solid rgba(15, 23, 42, .08);
-    background: rgba(255, 255, 255, .7);
-    cursor: pointer;
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    background: rgba(255, 255, 255, 0.85);
     display: grid;
     place-items: center;
-    transition: .2s ease;
+    cursor: pointer;
+    transition: 0.2s ease;
 }
 
 .eye:hover {
-    transform: translateY(-52%);
-    background: rgba(255, 255, 255, .95);
+    transform: translateY(-50%) scale(1.03);
 }
 
-.eye svg {
+.eye i {
     width: 18px;
     height: 18px;
-    opacity: .75;
 }
+
 
 .strength {
     height: 8px;
@@ -474,6 +503,92 @@ h1 {
     text-decoration: underline;
 }
 
+/* Inline error messages */
+.error {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    color: rgba(239, 68, 68, 0.95);
+    letter-spacing: -0.01em;
+}
+
+/* Invalid field state */
+.input.invalid,
+.phone-wrap.invalid {
+    border-color: rgba(239, 68, 68, 0.35) !important;
+    box-shadow: 0 18px 50px rgba(239, 68, 68, 0.10) !important;
+}
+
+/* Shake animation */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-6px);
+    }
+
+    40% {
+        transform: translateX(6px);
+    }
+
+    60% {
+        transform: translateX(-4px);
+    }
+
+    80% {
+        transform: translateX(4px);
+    }
+}
+
+.shake {
+    animation: shake 0.35s ease;
+}
+
+/* +63 phone dropdown style */
+.phone-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.country-btn {
+    height: 52px;
+    padding: 0 14px;
+    border-radius: 16px;
+    border: 1px solid rgba(15, 23, 42, .10);
+    background: rgba(255, 255, 255, .85);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: 900;
+    transition: .2s ease;
+}
+
+.country-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 40px rgba(2, 6, 23, .08);
+}
+
+.country-btn .chev {
+    width: 16px;
+    height: 16px;
+    opacity: .6;
+}
+
+.phone-input {
+    flex: 1;
+}
+
+.phone-input .input {
+    padding-left: 14px;
+}
+
 /* Responsive */
 @media (max-width: 620px) {
     .grid2 {
@@ -483,4 +598,15 @@ h1 {
     .card {
         padding: 26px 18px;
     }
+}
+
+/* Fix invisible cursor on form elements */
+
+label {
+    cursor: auto !important;
+}
+
+button,
+a {
+    cursor: pointer !important;
 }

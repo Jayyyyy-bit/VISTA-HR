@@ -24,7 +24,7 @@
 
     <!-- Topbar -->
     <header class="topbar">
-        <a class="brand" href="../../ASSETS/front_index.html">
+        <a class="brand" href="/Landing_Page/ASSETS/front_index.html">
             <span class="logo"><i data-lucide="building-2"></i></span>
             <span class="brand-text">VISTA<span>-HR</span></span>
         </a>
@@ -74,34 +74,53 @@
                 <div class="grid2">
                     <div class="field">
                         <label>First Name</label>
-                        <input class="input" type="text" name="firstName" placeholder="Juan" required />
+                        <input class="input" type="text" name="firstName" required />
+                        <small class="error" id="firstNameError"></small>
                     </div>
+
+
+
 
                     <div class="field">
                         <label>Last Name</label>
-                        <input class="input" type="text" name="lastName" placeholder="Dela Cruz" required />
+                        <input class="input" type="text" name="lastName" required />
+                        <small class="error" id="lastNameError"></small>
                     </div>
                 </div>
 
+
                 <div class="field">
                     <label>Email</label>
-                    <input class="input" type="email" name="email" placeholder="juan@email.com" required />
+                    <input class="input" type="email" name="email" required />
+                    <small class="error" id="emailError"></small>
                 </div>
+
 
                 <div class="field">
                     <label>Phone Number</label>
-                    <input class="input" type="tel" name="phone" placeholder="09xxxxxxxxx" required />
+                    <div class="phone-wrap" id="phoneWrap">
+                        <button type="button" class="country-btn" id="countryBtn">
+                            <span class="flag">🇵🇭</span>
+                            <span class="dial">+63</span>
+                            <i data-lucide="chevron-down" class="chev"></i>
+                        </button>
+
+                        <input class="input phone-input" type="tel" name="phone" id="phone" inputmode="numeric"
+                            autocomplete="tel" placeholder="9XXXXXXXXX" maxlength="10" required />
+                    </div>
+                    <small class="error" id="phoneError"></small>
                 </div>
+
 
                 <div class="field">
                     <label>Password</label>
-
                     <div class="pass-wrap">
                         <input class="input" id="password" type="password" name="password"
                             placeholder="Create a strong password" minlength="8" required />
                         <button class="eye" id="togglePass" type="button" aria-label="Show password">
                             <i data-lucide="eye"></i>
                         </button>
+                        <small class="error" id="passwordError"></small>
                     </div>
 
                     <div class="strength">
@@ -109,6 +128,7 @@
                     </div>
                     <p class="hint" id="strengthText">Use at least 8 characters.</p>
                 </div>
+
 
                 <label class="check">
                     <input type="checkbox" required />
