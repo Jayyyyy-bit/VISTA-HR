@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VISTA-HR | Welcome</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- ✅ Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="PO_welcome-page.css" />
+</head>
+
+<body>
+    <!-- Background -->
+    <div class="bg" aria-hidden="true">
+        <div class="grid"></div>
+        <div class="glow g1"></div>
+        <div class="glow g2"></div>
+    </div>
+
+    <header class="topbar">
+        <div class="brand">
+            <span class="logo-box"></span>
+            <span class="brand-text">VISTA<span>-HR</span></span>
+        </div>
+
+        <div class="top-right">
+            <span class="status-chip" id="statusChip">
+                <i data-lucide="user-round"></i>
+                <span id="statusText">Unverified</span>
+            </span>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <section class="hero">
+            <div class="pill">
+                <i data-lucide="sparkles"></i>
+                New owner onboarding
+            </div>
+
+            <h1>Welcome, <span class="accent" id="ownerName">Property Owner</span> 👋</h1>
+
+            <p class="subtitle">
+                You can explore the dashboard or start creating your first listing.
+                Your listing will stay as <b>Draft</b> until you publish.
+            </p>
+        </section>
+
+        <section class="cards">
+            <!-- Card 1 -->
+            <article class="card card-primary" id="createCard" tabindex="0">
+                <div class="card-head">
+                    <div class="icon-box"><i data-lucide="file-plus-2"></i></div>
+                    <div>
+                        <div class="card-title">Create your first listing</div>
+                        <div class="card-desc">Start the step-by-step listing wizard</div>
+                    </div>
+                </div>
+
+                <div class="mini-panel">
+                    <div class="mini-col">
+                        <div class="mini-label">Publishing</div>
+                        <div class="mini-value" id="publishValue">Locked</div>
+                    </div>
+                    <div class="mini-col">
+                        <div class="mini-label">Verification</div>
+                        <div class="mini-value" id="verifyValue">Required</div>
+                    </div>
+                    <div class="mini-col">
+                        <div class="mini-label">Location</div>
+                        <div class="mini-value">Metro Manila</div>
+                    </div>
+                </div>
+
+                <div class="mini-row">
+                    <!-- ✅ small button + tooltip -->
+                    <div class="tooltip">
+                        <button class="verify-mini" id="verifyNowBtn" type="button">
+                            <i data-lucide="badge-check"></i>
+                            Verify now
+                        </button>
+
+                        <div class="tip" role="tooltip">
+                            <div class="tip-title">Unlock publishing</div>
+                            <div class="tip-text">
+                                Verified owners can <b>publish listings</b>, gain <b>trust badge</b>, and get faster
+                                inquiries.
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="mini-dot">
+                        <i data-lucide="file-lock-2"></i>
+                        Draft by default
+                    </span>
+                </div>
+
+                <button class="primary-btn" id="startWizardBtn" type="button">
+                    Start wizard <i data-lucide="arrow-right"></i>
+                </button>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="card" id="dashCard" tabindex="0">
+                <div class="card-head">
+                    <div class="icon-box soft"><i data-lucide="layout-dashboard"></i></div>
+                    <div>
+                        <div class="card-title">Proceed to dashboard</div>
+                        <div class="card-desc">Explore your owner dashboard, view drafts, and manage listings</div>
+                    </div>
+                </div>
+
+                <div class="list">
+                    <div class="li"><i data-lucide="folder-open"></i> Draft manager</div>
+                    <div class="li"><i data-lucide="bell"></i> Notifications</div>
+                    <div class="li"><i data-lucide="user-cog"></i> Profile settings</div>
+                </div>
+
+                <button class="secondary-btn" id="openDashboardBtn" type="button">
+                    Open dashboard <i data-lucide="arrow-right"></i>
+                </button>
+            </article>
+        </section>
+    </main>
+    <div class="page-transition" aria-hidden="true"></div>
+    <script src="../../transition.js"></script>
+    <script src="PO_welcome-page.js"></script>
+    <script>lucide.createIcons();</script>
+
+    <button class="back-btn back-floating" id="backBtn" type="button">
+        <i data-lucide="arrow-left"></i>
+        <span>Back</span>
+    </button>
+
+    <script src="../../transition.js"></script>
+    <script src="PO_welcome-page.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+
+</html>
