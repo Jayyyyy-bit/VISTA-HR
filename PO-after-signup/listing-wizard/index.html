@@ -11,11 +11,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Reuse your Step 1 CSS or a shared base CSS -->
-    <link rel="stylesheet" href="create_listing_base.css" />
+    <link rel="stylesheet" href="wizard.css" />
+    <link rel="stylesheet" href="transition.css" />
 </head>
 
+
 <body>
+
+    <div class="bg" aria-hidden="true">
+        <div class="bg-grid"></div>
+        <div class="glow g1"></div>
+        <div class="glow g2"></div>
+    </div>
+
+    <!-- Persistent header -->
     <header class="topbar">
         <div class="brand">
             <span class="logo-box"></span>
@@ -28,46 +37,33 @@
         </div>
     </header>
 
+    <!-- Only center content swaps -->
     <main class="page">
         <div class="wizard-shell">
             <div class="stage stage-centered">
 
-                <!-- MAIN -->
-                <section class="panel panel-main" data-transition-key="main">
-                    <div class="panel-head">
-                        <div class="panel-kicker">Create listing • Step 2</div>
-                        <h2 class="title">What type of space will guests have?</h2>
-                        <p class="sub">Choose what guests can access during their stay.</p>
-                    </div>
-
-                    <div class="grid grid-2" id="spaceGrid"></div>
+                <section class="panel panel-main" id="stepHost" data-transition-key="main">
+                    <!-- injected -->
                 </section>
 
-                <!-- SIDE (persistent illusion) -->
                 <aside class="panel-side" data-transition-key="side">
                     <div class="side-stack">
 
                         <section class="mini-card">
                             <div class="mini-head">
-                                <div class="mini-title">
-                                    <i data-lucide="sparkles"></i>
-                                    Quick tips
-                                </div>
+                                <div class="mini-title"><i data-lucide="sparkles"></i> Quick tips</div>
                                 <div class="mini-pill" id="selectedPill">Selected: —</div>
                             </div>
-                            <ul class="tips" id="quickTips">
-                                <li>Pick what guests can use privately vs shared.</li>
-                                <li>This affects expectations and search filters.</li>
-                                <li>You can refine details later.</li>
+                            <ul class="tips" id="guideTips">
+                                <li>Pick the closest match for faster approval.</li>
+                                <li>Keep details consistent with your photos.</li>
+                                <li>You can edit this later anytime.</li>
                             </ul>
                         </section>
 
                         <section class="mini-card">
                             <div class="mini-head">
-                                <div class="mini-title">
-                                    <i data-lucide="check-circle-2"></i>
-                                    Draft readiness
-                                </div>
+                                <div class="mini-title"><i data-lucide="check-circle-2"></i> Draft readiness</div>
                                 <div class="mini-pill"><span id="percentLabel">0%</span></div>
                             </div>
 
@@ -89,26 +85,30 @@
         </div>
     </main>
 
+    <!-- Persistent footer -->
     <footer class="bottombar">
-        <div class="progress-bottom">
-            <span class="dot active"></span>
-            <span class="dot active"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-        </div>
-
+        <div class="progress-bottom" id="dots"></div>
         <div class="nav">
             <button class="btn ghost" id="backBtn" type="button">Back</button>
             <button class="btn solid" id="nextBtn" type="button" disabled>Next</button>
         </div>
     </footer>
 
-    <div id="transition-overlay" class="transition-overlay"></div>
+    <!-- Overlay (transition) -->
 
-    <script src="steps_transition.js"></script>
-    <script src="step2_space_type.js"></script>
+
+    <!-- Core scripts (order matters) -->
+    <script src="core/dom.js"></script>
+    <script src="core/store.js"></script>
+    <script src="core/sidepanel.js"></script>
+    <script src="core/transition.js"></script>
+
+    <script src="steps/step1_unit_category.js"></script>
+    <script src="steps/step2_space_type.js"></script>
+    <script src="steps/step3_location.js"></script>
+
+    <script src="core/router.js"></script>
+
     <script>lucide.createIcons();</script>
 </body>
 
