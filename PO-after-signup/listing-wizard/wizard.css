@@ -5,6 +5,11 @@
     --line: rgba(12, 19, 34, .10);
     --blue: #1f5dff;
     --blue2: #6aa7ff;
+
+    --radius-xl: 22px;
+    --radius-lg: 18px;
+    --radius-md: 14px;
+
     --shadow: 0 18px 55px rgba(12, 19, 34, .10);
     --shadow2: 0 12px 30px rgba(12, 19, 34, .10);
 }
@@ -25,7 +30,48 @@ body {
     background: #fff;
 }
 
-/* Top header */
+/* ===== Background (same feel as PO_welcome) ===== */
+.bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden
+}
+
+.bg .bg-grid {
+    position: absolute;
+    inset: -200px;
+    background-image:
+        linear-gradient(to right, rgba(12, 19, 34, .06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(12, 19, 34, .06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    transform: translateZ(0);
+    opacity: .55;
+}
+
+
+.bg .glow {
+    position: absolute;
+    width: 900px;
+    height: 900px;
+    border-radius: 999px;
+    filter: blur(40px);
+    opacity: .22;
+}
+
+.bg .g1 {
+    left: -220px;
+    top: -240px;
+    background: radial-gradient(circle, rgba(31, 93, 255, .65), transparent 60%);
+}
+
+.bg .g2 {
+    right: -260px;
+    top: -160px;
+    background: radial-gradient(circle, rgba(106, 167, 255, .55), transparent 60%);
+}
+
+/* ===== Topbar ===== */
 .topbar {
     height: 64px;
     display: flex;
@@ -33,7 +79,7 @@ body {
     justify-content: space-between;
     padding: 0 22px;
     border-bottom: 1px solid rgba(12, 19, 34, .08);
-    background: rgba(255, 255, 255, .92);
+    background: rgba(255, 255, 255, .82);
     backdrop-filter: blur(10px);
     position: sticky;
     top: 0;
@@ -91,7 +137,7 @@ body {
     box-shadow: 0 14px 26px rgba(31, 93, 255, .18);
 }
 
-/* Centered stage */
+/* ===== Page layout ===== */
 .page {
     min-height: calc(100vh - 64px - 78px);
     display: flex;
@@ -105,48 +151,7 @@ body {
     margin: 0 auto;
 }
 
-.wizard {
-    height: 560px;
-    position: relative
-}
-
-/* Slide transitions */
-.slides {
-    width: 100%;
-    height: 100%;
-    position: relative
-}
-
-.slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transform: translateY(10px) scale(.992);
-    pointer-events: none;
-    transition:
-        opacity 420ms cubic-bezier(.2, .9, .2, 1),
-        transform 520ms cubic-bezier(.2, .9, .2, 1);
-}
-
-.slide.active {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
-}
-
-.slide.exit-left {
-    opacity: 0;
-    transform: translateX(-24px) scale(.985)
-}
-
-.slide.exit-right {
-    opacity: 0;
-    transform: translateX(24px) scale(.985)
-}
-
-/* NEW CENTERED LAYOUT */
 .stage {
-    height: 100%;
     display: grid;
     gap: 18px;
 }
@@ -154,22 +159,36 @@ body {
 .stage-centered {
     grid-template-columns: minmax(560px, 1fr) 380px;
     align-items: start;
-    justify-content: center;
 }
 
-/* Floating panels */
+
+/* ===== Panels ===== */
 .panel {
-    border-radius: 22px;
+    border-radius: var(--radius-xl);
     border: 1px solid rgba(12, 19, 34, .10);
     background: linear-gradient(180deg, rgba(255, 255, 255, .92), rgba(245, 248, 255, .88));
     box-shadow: var(--shadow);
     backdrop-filter: blur(10px);
-    transform: translateY(-1px);
     transition: transform .18s ease, box-shadow .18s ease;
 }
 
+/* Airbnb-like: main step area is NOT a card */
+.panel.panel-main {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    padding: 0;
+    /* let step header breathe */
+}
+
+.panel.panel-main:hover {
+    transform: none;
+    box-shadow: none;
+}
+
 .panel:hover {
-    transform: translateY(-4px);
+    transform: translateY(-3px);
     box-shadow: 0 22px 65px rgba(12, 19, 34, .13)
 }
 
@@ -178,11 +197,9 @@ body {
 }
 
 .panel-side {
-    padding: 0;
     background: transparent;
     border: none;
-    box-shadow: none;
-    transform: none
+    box-shadow: none
 }
 
 .panel-side:hover {
@@ -204,26 +221,60 @@ body {
     margin-bottom: 6px;
 }
 
+/* ===== Airbnb-style step header ===== */
+.step-header {
+    margin-bottom: 18px;
+}
+
+.step-kicker {
+    font-size: 12px;
+    font-weight: 900;
+    color: rgba(12, 19, 34, .45);
+    letter-spacing: .2px;
+    margin-bottom: 6px;
+}
+
+.step-title {
+    margin: 0;
+    font-size: 28px;
+    /* ⬅️ bigger, editorial */
+    font-weight: 950;
+    letter-spacing: -.4px;
+    color: var(--ink);
+}
+
+.step-sub {
+    margin: 8px 0 0;
+    font-size: 14px;
+    font-weight: 750;
+    color: rgba(12, 19, 34, .55);
+}
+
+
 .title {
     margin: 0;
     font-size: 22px;
     font-weight: 950;
-    letter-spacing: -.3px;
+    letter-spacing: -.3px
 }
 
 .sub {
     margin: 10px 0 0;
     color: rgba(12, 19, 34, .55);
     font-weight: 750;
-    font-size: 13px;
+    font-size: 13px
 }
 
-/* Grid cards */
+/* ===== Cards grid ===== */
 .grid {
     margin-top: 14px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 14px;
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .card {
@@ -234,7 +285,7 @@ body {
     text-align: left;
     cursor: pointer;
     transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
-    min-height: 78px;
+    min-height: 84px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -252,11 +303,43 @@ body {
     box-shadow: 0 18px 45px rgba(31, 93, 255, .14);
 }
 
-.card .icon {
-    width: 22px;
-    height: 22px;
-    color: rgba(12, 19, 34, .78)
+.card .card-ic {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 6px;
+    color: rgba(12, 19, 34, .85);
+    display: block;
 }
+
+/* Step 2: Airbnb-like row card with icon on right */
+.card.card-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    text-align: left;
+}
+
+.card.card-row .card-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.card.card-row .label {
+    font-weight: 900;
+    font-size: 14px;
+    color: var(--ink);
+}
+
+.card.card-row .desc {
+    font-size: 12.5px;
+    font-weight: 650;
+    color: rgba(12, 19, 34, .62);
+    line-height: 1.35;
+}
+
 
 .card .label {
     font-weight: 950;
@@ -264,7 +347,54 @@ body {
     color: rgba(12, 19, 34, .86)
 }
 
-/* Side stack: only 2 compact cards */
+.card .desc {
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 750;
+    color: rgba(12, 19, 34, .55);
+    line-height: 1.35;
+}
+
+
+/* Step 1: bigger icons to utilize space */
+/* Step 1: use space better */
+#typeGrid .card {
+    padding: 18px;
+    min-height: 104px;
+    /* ⬅️ key part */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+}
+
+#typeGrid .card-ic {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 8px;
+}
+
+
+
+.card-ic.right {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    opacity: .9;
+}
+
+/* Step 2 spacing polish */
+#spaceGrid .card.card-row {
+    padding: 16px 18px;
+    min-height: 84px;
+}
+
+#spaceGrid .card-ic.right {
+    margin-left: 12px;
+}
+
+
+/* ===== Side stack ===== */
 .side-stack {
     display: grid;
     gap: 12px;
@@ -273,7 +403,7 @@ body {
 }
 
 .mini-card {
-    border-radius: 18px;
+    border-radius: var(--radius-lg);
     border: 1px solid rgba(12, 19, 34, .10);
     background: rgba(255, 255, 255, .86);
     box-shadow: 0 14px 40px rgba(12, 19, 34, .08);
@@ -285,11 +415,6 @@ body {
     transform: translateY(-2px);
     border-color: rgba(31, 93, 255, .18);
     box-shadow: 0 18px 55px rgba(12, 19, 34, .11);
-}
-
-.mini-card.is-dim {
-    opacity: .60;
-    pointer-events: none;
 }
 
 .mini-head {
@@ -327,7 +452,6 @@ body {
     white-space: nowrap;
 }
 
-/* Tips list */
 .tips {
     margin: 8px 0 0;
     padding-left: 18px;
@@ -341,7 +465,7 @@ body {
     margin: 6px 0
 }
 
-/* Progress */
+/* readiness */
 .progress-track {
     margin-top: 10px;
     height: 6px;
@@ -372,13 +496,6 @@ body {
     border-radius: 14px;
     border: 1px solid rgba(12, 19, 34, .08);
     background: rgba(255, 255, 255, .70);
-    transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
-}
-
-.cl-item:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 10px 22px rgba(12, 19, 34, .08);
-    border-color: rgba(31, 93, 255, .14);
 }
 
 .cl-left {
@@ -407,7 +524,7 @@ body {
 .cl-s {
     font-weight: 750;
     font-size: 12px;
-    color: var(--muted2)
+    color: rgba(12, 19, 34, .45)
 }
 
 .cl-state {
@@ -435,83 +552,12 @@ body {
     color: rgba(12, 19, 34, .55);
 }
 
-/* Step 2 placeholder */
-.placeholder {
-    margin-top: 12px;
-    display: grid;
-    gap: 14px
-}
-
-.ph-card {
-    border: 1px solid rgba(12, 19, 34, .10);
-    border-radius: 14px;
-    background: #fff;
-    box-shadow: 0 14px 40px rgba(12, 19, 34, .08);
-    padding: 16px;
-    text-align: left;
-}
-
-.ph-row {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    padding: 10px 0
-}
-
-.ph-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 999px;
-    background: rgba(31, 93, 255, .35)
-}
-
-.ph-lines {
-    flex: 1;
-    display: grid;
-    gap: 8px
-}
-
-.ph-line {
-    height: 10px;
-    border-radius: 999px;
-    background: rgba(12, 19, 34, .07)
-}
-
-.w60 {
-    width: 60%
-}
-
-.w55 {
-    width: 55%
-}
-
-.w50 {
-    width: 50%
-}
-
-.w40 {
-    width: 40%
-}
-
-.w35 {
-    width: 35%
-}
-
-.w30 {
-    width: 30%
-}
-
-.hint {
-    font-size: 12px;
-    color: rgba(12, 19, 34, .55);
-    font-weight: 700
-}
-
-/* Bottom bar */
+/* ===== Footer ===== */
 .bottombar {
     height: 78px;
     border-top: 1px solid rgba(12, 19, 34, .08);
-    background: #fff;
+    background: rgba(255, 255, 255, .82);
+    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -552,14 +598,13 @@ body {
     background: #fff;
     color: rgba(12, 19, 34, .72);
     min-width: 92px;
-    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease, border-color .15s ease;
+    transition: transform .15s ease, filter .15s ease, border-color .15s ease;
 }
 
 .btn:disabled {
     opacity: .45;
     cursor: not-allowed;
-    transform: none;
-    box-shadow: none
+    transform: none
 }
 
 .btn.ghost:hover {
@@ -578,22 +623,13 @@ body {
     transform: translateY(-1px)
 }
 
-/* Responsive */
 @media (max-width: 980px) {
-    .wizard {
-        height: auto
-    }
-
     .page {
         align-items: flex-start
     }
 
     .stage-centered {
-        grid-template-columns: 1fr;
-    }
-
-    .panel-side {
-        padding: 0
+        grid-template-columns: 1fr
     }
 
     .side-stack {
@@ -605,59 +641,99 @@ body {
     }
 }
 
-/* STEP 2 CSS*/
+/* ===============================
+   STEP 2 – FORCE ROW LAYOUT
+   =============================== */
 
-.grid-2 {
-    grid-template-columns: repeat(2, 1fr);
+/* Step 2: Airbnb stacked list (one column) */
+#spaceGrid {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    gap: 14px;
 }
 
-.card .desc {
-    margin-top: 4px;
-    font-size: 12px;
-    font-weight: 750;
-    color: rgba(12, 19, 34, .55);
-    line-height: 1.35;
+/* Step 2: constrain content width like Airbnb */
+#stepHost .step-header,
+#spaceGrid {
+    max-width: 640px;
+    /* Airbnb-ish */
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/* transition overlay */
-.transition-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 9998;
-    pointer-events: none;
-    opacity: 0;
-    background:
-        radial-gradient(1200px 600px at 20% 10%, rgba(31, 93, 255, .08), transparent 60%),
-        radial-gradient(900px 500px at 80% 20%, rgba(106, 167, 255, .06), transparent 55%),
-        rgba(255, 255, 255, .35);
-    backdrop-filter: blur(10px);
+#spaceGrid .card {
+    padding: 20px 22px;
+    min-height: 104px;
+    border-radius: 14px;
 }
 
-.transition-overlay.is-on {
-    opacity: 1;
-}
-
-.transition-clone {
-    border-radius: 22px;
-    overflow: hidden;
-    box-shadow: 0 18px 55px rgba(12, 19, 34, .10);
+#spaceGrid .card-ic {
+    width: 34px;
+    height: 34px;
 }
 
 
-.btn.pulse {
-    animation: btnPulse 420ms cubic-bezier(.2, .9, .2, 1);
+#spaceGrid .card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 20px;
+    min-height: 96px;
+
+    text-align: left;
 }
 
-@keyframes btnPulse {
+
+/* Prevent Step 1 styles from affecting Step 2 */
+#spaceGrid .card {
+    flex-direction: row !important;
+}
+
+#spaceGrid .card .label {
+    font-size: 15px;
+    /* from 14px */
+}
+
+#spaceGrid .card .desc {
+    font-size: 13px;
+    /* from 12.5px */
+    line-height: 1.45;
+}
+
+/* ===============================
+   ICON MICRO-ANIMATION (ON SELECT)
+   =============================== */
+
+/* base state */
+.card-ic {
+    transition: transform 260ms cubic-bezier(.2, .9, .2, 1),
+        color 200ms ease;
+    transform-origin: center;
+}
+
+/* selected → pop */
+.card.selected .card-ic {
+    animation: icon-pop 360ms cubic-bezier(.2, .9, .2, 1);
+    color: var(--brand);
+    /* optional: match your blue */
+}
+
+/* keyframes */
+@keyframes icon-pop {
     0% {
-        transform: translateY(0) scale(1);
+        transform: scale(1);
     }
 
     40% {
-        transform: translateY(-1px) scale(1.02);
+        transform: scale(1.18) rotate(-4deg);
+    }
+
+    70% {
+        transform: scale(0.96) rotate(2deg);
     }
 
     100% {
-        transform: translateY(0) scale(1);
+        transform: scale(1);
     }
 }
