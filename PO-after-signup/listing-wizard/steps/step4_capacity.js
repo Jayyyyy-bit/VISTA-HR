@@ -34,10 +34,12 @@ window.Step4Init = function Step4Init({ nextBtn }) {
         let value = cap[key] ?? 0;
 
         wrap.innerHTML = `
-      <button class="step-btn minus">−</button>
-      <div class="step-val">${value}</div>
-      <button class="step-btn plus">+</button>
-    `;
+  <button class="step-btn qtyBtn minus" type="button" aria-label="Decrease">−</button>
+  <div class="step-val">${value}</div>
+  <button class="step-btn qtyBtn plus" type="button" aria-label="Increase">+</button>
+`;
+
+
 
         const valEl = wrap.querySelector(".step-val");
 

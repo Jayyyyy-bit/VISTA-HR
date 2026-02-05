@@ -27,7 +27,8 @@ window.ListingStore = (() => {
 
         const next = {
             id: d.id || ("draft-" + Date.now()),
-            status: "DRAFT",
+            status: d.status || "DRAFT",
+
 
             // Step 1–3
             placeType: d.placeType ?? null,
@@ -40,6 +41,7 @@ window.ListingStore = (() => {
             highlights: d.highlights ?? [],
             photos: d.photos ?? [],
             virtualTour: d.virtualTour ?? { enabled: false, panoUrl: "" },
+            details: d.details ?? { title: "", description: "" },
 
             verified: d.verified ?? false,
 
@@ -51,6 +53,18 @@ window.ListingStore = (() => {
         // If patch has nested location, merge it properly
         if (patch && patch.location) {
             next.location = { ...next.location, ...patch.location };
+        }
+        if (patch && patch.capacity) {
+            next.capacity = { ...next.capacity, ...patch.capacity };
+        }
+        if (patch && patch.amenities) {
+            next.amenities = { ...next.amenities, ...patch.amenities };
+        }
+        if (patch && patch.virtualTour) {
+            next.virtualTour = { ...next.virtualTour, ...patch.virtualTour };
+        }
+        if (patch && patch.details) {
+            next.details = { ...next.details, ...patch.details };
         }
 
         localStorage.setItem(KEY, JSON.stringify(next));
@@ -103,8 +117,12 @@ window.ListingStore = (() => {
         },
         {
             step: 8, label: "Title & description", weight: 10,
-            isDone: d => !!d.title && !!d.description
+            isDone: d => {
+                const det = d.details || {};
+                return !!(det.title && det.title.trim()) && !!(det.description && det.description.trim());
+            }
         }
+
     ];
 
 

@@ -134,7 +134,7 @@ window.Step3Init = function Step3Init() {
         selectedLabel: "Location",
         tips: [
             "City selection is limited to Metro Manila (project scope).",
-            "Exact map pin can be added later."
+            "Exact map pin can be added on the update."
         ]
     });
     SidePanel.refresh();

@@ -7,19 +7,19 @@
     const nextBtn = $("#nextBtn");
     const dots = $("#dots");
 
+    // ✅ adjust if your dashboard path changes
+    const DASHBOARD_URL = "/Property-Owner/dashboard/property-owner-dashboard.html";
+
     const ROUTES = [
         { id: "step-1", file: "steps/step1_unit_category.html", init: window.Step1Init },
         { id: "step-2", file: "steps/step2_space_type.html", init: window.Step2Init },
         { id: "step-3", file: "steps/step3_location.html", init: window.Step3Init },
-
-        // Add later as you create the files:
-        // { id: "step-4", file: "steps/step4_capacity_rooms.html", init: window.Step4Init },
-        // { id: "step-5", file: "steps/step5_amenities.html", init: window.Step5Init },
-        // { id: "step-6", file: "steps/step6_highlights.html", init: window.Step6Init },
-        // { id: "step-7", file: "steps/step7_photos_virtualtour.html", init: window.Step7Init },
-        // { id: "step-8", file: "steps/step8_title_description_review.html", init: window.Step8Init }
+        { id: "step-4", file: "steps/step4_capacity.html", init: window.Step4Init },
+        { id: "step-5", file: "steps/step5_amenities.html", init: window.Step5Init },
+        { id: "step-6", file: "steps/step6_highlights.html", init: window.Step6Init },
+        { id: "step-7", file: "steps/step7_photos.html", init: window.Step7Init },
+        { id: "step-8", file: "steps/step8_details.html", init: window.Step8Init },
     ];
-
 
     function setHash(id) {
         location.hash = `#/${id}`;
@@ -36,12 +36,23 @@
 
     function renderDots(activeIndex) {
         if (!dots) return;
-        dots.innerHTML = ROUTES.map((_, i) =>
-            `<span class="dot ${i <= activeIndex ? "active" : ""}"></span>`
-        ).join("");
+        dots.innerHTML = ROUTES
+            .map((_, i) => `<span class="dot ${i <= activeIndex ? "active" : ""}"></span>`)
+            .join("");
     }
-    const STEP_CACHE = new Map();
 
+    function setNextLabel(idx) {
+        if (!nextBtn) return;
+        const isLast = idx === ROUTES.length - 1;
+        nextBtn.textContent = isLast ? "Finish" : "Next";
+    }
+
+    function updateStepKicker(idx) {
+        const kicker = stepHost?.querySelector(".step-kicker");
+        if (kicker) kicker.textContent = `Create listing • Step ${idx + 1} of ${ROUTES.length}`;
+    }
+
+    const STEP_CACHE = new Map();
     async function getStepHTML(file) {
         if (STEP_CACHE.has(file)) return STEP_CACHE.get(file);
         const res = await fetch(file, { cache: "no-store" });
@@ -50,85 +61,86 @@
         return html;
     }
 
-    async function loadStep(id, { pushHash = true } = {}) {
+    async function loadStep(id) {
         const route = ROUTES.find(r => r.id === id) || ROUTES[0];
         const idx = indexOfRoute(route.id);
 
-        // Start fetching ASAP (cached)
+        // fetch ASAP (cache)
         const htmlPromise = getStepHTML(route.file);
 
-        // Fade out immediately (no pause)
-        if (stepHost.dataset.hasStep) {
+        // fade out old
+        if (stepHost?.dataset?.hasStep) {
             await window.StepTransition.fadeOut(stepHost);
         }
 
-        // Wait for HTML
+        // inject new while hidden
         const html = await htmlPromise;
-
-        // Inject while hidden
         stepHost.innerHTML = html;
         stepHost.dataset.hasStep = "1";
 
-        // Init step content (renders cards)
-        const initFn =
-            route.id === "step-1" ? window.Step1Init :
-                route.id === "step-2" ? window.Step2Init :
-                    route.init;
+        // update header label inside step
+        updateStepKicker(idx);
 
-        if (typeof initFn === "function") {
-            initFn({ stepId: route.id, nextBtn, backBtn });
+        // init
+        if (typeof route.init === "function") {
+            route.init({ stepId: route.id, nextBtn, backBtn });
         }
 
-        // Convert lucide icons AFTER cards exist
-        if (window.lucide?.createIcons) lucide.createIcons();
+        // lucide after DOM exists
+        if (window.lucide?.createIcons) window.lucide.createIcons();
 
         // UI states
         renderDots(idx);
+        setNextLabel(idx);
         if (backBtn) backBtn.disabled = idx <= 0;
-        window.SidePanel.refresh();
 
-        // Fade in
+        if (window.SidePanel?.refresh) window.SidePanel.refresh();
+
+        // fade in
         await window.StepTransition.fadeIn(stepHost);
     }
 
+    // Expose (optional)
+    window.loadStep = loadStep;
 
-    // Expose for steps (optional)
-    window.loadStep = (id) => loadStep(id);
-
-
-    // Footer navigation (FIXED: no direct loadStep)
+    // Hash navigation
     on(backBtn, "click", () => {
         const current = getRouteFromHash();
         const idx = indexOfRoute(current);
-        const prev = ROUTES[Math.max(0, idx - 1)].id;
-        setHash(prev); // ✅ only change hash
+        const prevId = ROUTES[Math.max(0, idx - 1)].id;
+        setHash(prevId);
     });
 
     on(nextBtn, "click", () => {
         const current = getRouteFromHash();
         const idx = indexOfRoute(current);
-        const next = ROUTES[Math.min(ROUTES.length - 1, idx + 1)].id;
-        setHash(next); // ✅ only change hash
+        const isLast = idx >= ROUTES.length - 1;
+
+        if (isLast) {
+            // optional: mark draft status on finish
+            window.ListingStore?.saveDraft?.({ status: "DRAFT" }); // or "READY_FOR_REVIEW"
+            location.href = DASHBOARD_URL;
+            return;
+        }
+
+        const nextId = ROUTES[idx + 1].id;
+        setHash(nextId);
     });
-
-
 
     // Header buttons
-    on($("#saveExitBtn"), "click", () =>
-        alert("Saved as draft. (Redirect later to dashboard)")
-    );
-    on($("#questionsBtn"), "click", () =>
-        alert("FAQ coming soon.")
-    );
-
-    // Browser back / forward
-    window.addEventListener("hashchange", () => {
-        loadStep(getRouteFromHash(), { pushHash: false });
+    on($("#saveExitBtn"), "click", () => {
+        // save draft then go dashboard
+        window.ListingStore?.saveDraft?.({ status: "DRAFT" });
+        location.href = `${DASHBOARD_URL}#/listings`;
     });
 
+    on($("#questionsBtn"), "click", () => alert("FAQ coming soon."));
+
+    // When hash changes, load correct step
+    window.addEventListener("hashchange", () => {
+        loadStep(getRouteFromHash());
+    });
 
     // Initial load
-    loadStep(getRouteFromHash(), { pushHash: false });
+    loadStep(getRouteFromHash());
 })();
-
-

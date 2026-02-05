@@ -1,0 +1,49 @@
+<div class="step-header">
+    <div class="step-kicker">Create listing • Step 8</div>
+    <h1 class="step-title">Now, give your place a title</h1>
+    <p class="step-sub">Keep it clear and specific. You can tweak this later.</p>
+</div>
+
+<section class="detShell">
+    <!-- Title -->
+    <div class="detCard">
+        <div class="detHead">
+            <div>
+                <div class="detTitle">Listing title</div>
+                <div class="detSub">Max 50 characters</div>
+            </div>
+            <div class="detCount"><span id="titleCount">0</span>/50</div>
+        </div>
+
+        <input id="listingTitle" class="detInput" type="text" maxlength="50"
+            placeholder="e.g., Modern studio near MRT with fast Wi-Fi" />
+        <div class="detHint" id="titleHint">Tip: mention location + strongest feature.</div>
+    </div>
+
+    <!-- Description -->
+    <div class="detCard">
+        <div class="detHead">
+            <div>
+                <div class="detTitle">Description</div>
+                <div class="detSub">Max 500 characters</div>
+            </div>
+            <div class="detCount"><span id="descCount">0</span>/500</div>
+        </div>
+
+        <textarea id="listingDesc" class="detTextarea" maxlength="500"
+            placeholder="Describe the space, what’s included, and any important notes for guests."></textarea>
+
+        <div class="detHint">
+            Include: what guests get, what’s shared, nearby landmarks, and house rules preview.
+        </div>
+    </div>
+
+    <!-- Preview -->
+    <div class="detPreview">
+        <div class="pvTitle">Preview</div>
+        <div class="pvCard">
+            <div class="pvH" id="pvTitle">—</div>
+            <div class="pvP" id="pvDesc">—</div>
+        </div>
+    </div>
+</section>
