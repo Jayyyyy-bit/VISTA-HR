@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VISTA-HR | Create Listing</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <script src="vendor/lucide.min.js"></script>
+
+    <link rel="stylesheet" href="wizard.css" />
+    <link rel="stylesheet" href="transition.css" />
+</head>
+
+
+<body>
+
+    <div class="bg" aria-hidden="true">
+        <div class="bg-grid"></div>
+        <div class="glow g1"></div>
+        <div class="glow g2"></div>
+    </div>
+
+    <!--  header -->
+    <header class="topbar">
+        <div class="brand">
+            <span class="logo-box"></span>
+            <span class="brand-text">VISTA<span>-HR</span></span>
+        </div>
+
+        <div class="top-actions">
+            <button class="chip" type="button" id="questionsBtn">Questions?</button>
+            <button class="chip primary" type="button" id="saveExitBtn">Save & exit</button>
+        </div>
+    </header>
+
+    <!-- Only center content swaps -->
+    <main class="page">
+        <div class="wizard-shell">
+            <div class="stage stage-centered">
+
+                <section class="panel panel-main" id="stepHost" data-transition-key="main">
+                    <!-- injected sa mga steps-->
+                </section>
+
+                <aside class="panel-side" data-transition-key="side">
+                    <div class="side-stack">
+
+                        <section class="mini-card">
+                            <div class="mini-head">
+                                <div class="mini-title"><i data-lucide="sparkles"></i> Quick tips</div>
+                                <div class="mini-pill" id="selectedPill">Selected: —</div>
+                            </div>
+                            <ul class="tips" id="guideTips">
+                                <li>Pick the closest match for faster approval.</li>
+                                <li>Keep details consistent with your photos.</li>
+                                <li>You can edit this later anytime.</li>
+                            </ul>
+                        </section>
+
+                        <section class="mini-card">
+                            <div class="mini-head">
+                                <div class="mini-title"><i data-lucide="check-circle-2"></i> Draft readiness</div>
+                                <div class="mini-pill"><span id="percentLabel">0%</span></div>
+                            </div>
+
+                            <div class="progress-track">
+                                <div class="bar" id="progressBar"></div>
+                            </div>
+
+                            <div class="checklist" id="sideChecklist"></div>
+
+                            <div class="side-note">
+                                Publishing stays <b>locked</b> until verification (later).
+                            </div>
+                        </section>
+
+                    </div>
+                </aside>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer class="bottombar">
+        <div class="progress-bottom" id="dots"></div>
+        <div class="nav">
+            <button class="btn ghost" id="backBtn" type="button">Back</button>
+            <button class="btn solid" id="nextBtn" type="button" disabled>Next</button>
+        </div>
+    </footer>
+
+    <!-- Overlay (transition) to -->
+
+
+    <!-- Core scripts naka in order para di magulo -->
+    <script src="core/dom.js"></script>
+    <script src="core/store.js"></script>
+    <script src="core/sidepanel.js"></script>
+    <script src="core/transition.js"></script>
+
+    <script src="steps/step1_unit_category.js"></script>
+    <script src="steps/step2_space_type.js"></script>
+    <script src="steps/step3_location.js"></script>
+    <script src="steps/step4_capacity.js"></script>
+    <script src="steps/step5_amenities.js"></script>
+    <script src="steps/step6_highlights.js"></script>
+    <script src="steps/step7_photos.js"></script>
+    <script src="steps/step8_details.js"></script>
+
+    <script src="core/bg-motion.js"></script>
+    <script src="core/router.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

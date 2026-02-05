@@ -1,0 +1,15 @@
+/*  fade in/out transition */
+
+#stepHost {
+    opacity: 1;
+    transition: opacity 450ms ease;
+    will-change: opacity;
+}
+
+#stepHost.fx-out {
+    opacity: 0;
+}
+
+#stepHost.fx-in {
+    opacity: 1;
+}

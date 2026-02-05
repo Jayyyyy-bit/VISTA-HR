@@ -1,0 +1,53 @@
+<div class="step-header">
+    <div class="step-kicker">Create listing • Step 5</div>
+    <h1 class="step-title">What amenities do you offer?</h1>
+    <p class="step-sub">Choose what guests can use. You can edit this later.</p>
+</div>
+
+<section class="amenShell">
+    <!-- Tabs -->
+    <div class="amenTabs" role="tablist" aria-label="Amenity categories">
+        <button class="amenTab isActive" type="button" data-tab="appliances" role="tab" aria-selected="true">
+            Appliances
+        </button>
+        <button class="amenTab" type="button" data-tab="activities" role="tab" aria-selected="false">
+            Activities
+        </button>
+        <button class="amenTab" type="button" data-tab="safety" role="tab" aria-selected="false">
+            Safety items
+        </button>
+        <div class="amenIndicator" id="amenIndicator" aria-hidden="true"></div>
+    </div>
+
+    <!-- Panel -->
+    <div class="amenPanel">
+        <div class="amenTop">
+            <div class="amenMeta">
+                <div class="amenTitle" id="amenTitle">Appliances</div>
+                <div class="amenHint" id="amenHint">Common home essentials guests expect.</div>
+            </div>
+
+            <!-- Search -->
+            <div class="amenSearch">
+                <i class="amenSearchIc" data-lucide="search"></i>
+                <input id="amenSearchInput" class="amenSearchInput" type="text" placeholder="Search amenities…" />
+                <button id="amenSearchClear" class="amenSearchClear" type="button" aria-label="Clear search">×</button>
+            </div>
+        </div>
+
+        <!-- scroll container -->
+        <div class="amenScroll" id="amenScroll">
+            <div class="grid grid-2" id="amenGrid"></div>
+        </div>
+
+        <div class="amenFooter">
+            <div class="amenCount">
+                Selected: <b id="amenCount">0</b>
+            </div>
+            <div class="amenNote">
+                Tip: add at least 8–12 for better search visibility.
+            </div>
+        </div>
+    </div>
+
+</section>

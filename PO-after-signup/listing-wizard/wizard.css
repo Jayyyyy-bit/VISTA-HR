@@ -1,0 +1,2056 @@
+:root {
+    --ink: #0c1322;
+    --muted: rgba(12, 19, 34, .60);
+    --muted2: rgba(12, 19, 34, .45);
+    --line: rgba(12, 19, 34, .10);
+    --blue: #1f5dff;
+    --blue2: #6aa7ff;
+
+    --radius-xl: 22px;
+    --radius-lg: 18px;
+    --radius-md: 14px;
+
+    --shadow: 0 18px 55px rgba(12, 19, 34, .10);
+    --shadow2: 0 12px 30px rgba(12, 19, 34, .10);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    color: var(--ink);
+    background: #fff;
+}
+
+/* ===== Background (same feel as PO_welcome) ===== */
+.bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* ✅ Support both markup variants:
+   - old: .bg-grid
+   - current HTML: .grid
+*/
+.bg .bg-grid,
+.bg .grid {
+    position: absolute;
+    inset: -200px;
+    background-image:
+        linear-gradient(to right, rgba(12, 19, 34, .06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(12, 19, 34, .06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    transform: translateZ(0);
+    opacity: .55;
+}
+
+.bg .glow {
+    position: absolute;
+    width: 900px;
+    height: 900px;
+    border-radius: 999px;
+    filter: blur(40px);
+    opacity: .22;
+}
+
+.bg .g1 {
+    left: -220px;
+    top: -240px;
+    background: radial-gradient(circle, rgba(31, 93, 255, .65), transparent 60%);
+}
+
+.bg .g2 {
+    right: -260px;
+    top: -160px;
+    background: radial-gradient(circle, rgba(106, 167, 255, .55), transparent 60%);
+}
+
+/* =========================
+   BACKGROUND MOTION (glows)
+   ========================= */
+
+/* smoother perf */
+.bg .glow {
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
+}
+
+/* big slow float */
+.bg .g1 {
+    animation: float-g1 12s ease-in-out infinite;
+}
+
+.bg .g2 {
+    animation: float-g2 14s ease-in-out infinite;
+}
+
+/* gentle pulse (optional but nice) */
+.bg .glow {
+    animation-name: pulse-soft;
+    animation-duration: 6s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* combine float + pulse */
+.bg .g1 {
+    animation: float-g1 12s ease-in-out infinite, pulse-soft 6s ease-in-out infinite alternate;
+}
+
+.bg .g2 {
+    animation: float-g2 14s ease-in-out infinite, pulse-soft 7s ease-in-out infinite alternate;
+}
+
+@keyframes float-g1 {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(60px, 40px, 0) scale(1.03);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes float-g2 {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(-70px, 55px, 0) scale(1.04);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes pulse-soft {
+    0% {
+        opacity: .18;
+    }
+
+    100% {
+        opacity: .26;
+    }
+}
+
+/* accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .bg .g1,
+    .bg .g2,
+    .bg .glow {
+        animation: none !important;
+    }
+}
+
+/* ===== Topbar ===== */
+.topbar {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+    border-bottom: 1px solid rgba(12, 19, 34, .08);
+    background: rgba(255, 255, 255, .82);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 30;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    background: #111;
+}
+
+.brand-text {
+    font-weight: 900;
+    letter-spacing: .2px;
+}
+
+.brand-text span {
+    color: var(--blue);
+}
+
+.top-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.chip {
+    border: 1px solid rgba(12, 19, 34, .12);
+    background: #fff;
+    padding: 9px 12px;
+    border-radius: 999px;
+    font-weight: 800;
+    color: rgba(12, 19, 34, .72);
+    cursor: pointer;
+    transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+}
+
+.chip:hover {
+    transform: translateY(-1px);
+    border-color: rgba(31, 93, 255, .22);
+    box-shadow: 0 12px 22px rgba(12, 19, 34, .08);
+}
+
+.chip.primary {
+    background: linear-gradient(135deg, var(--blue), var(--blue2));
+    border: none;
+    color: #fff;
+    box-shadow: 0 14px 26px rgba(31, 93, 255, .18);
+}
+
+/* ===== Page layout ===== */
+.page {
+    min-height: calc(100vh - 64px - 78px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 18px;
+}
+
+.wizard-shell {
+    width: min(1120px, 96vw);
+    margin: 0 auto;
+}
+
+.stage {
+    display: grid;
+    gap: 18px;
+}
+
+.stage-centered {
+    grid-template-columns: minmax(560px, 1fr) 380px;
+    align-items: start;
+}
+
+/* ===== Panels ===== */
+.panel {
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: linear-gradient(180deg, rgba(255, 255, 255, .92), rgba(245, 248, 255, .88));
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+/* Airbnb-like: main step area is NOT a card */
+.panel.panel-main {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    padding: 0;
+}
+
+.panel.panel-main:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.panel:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 65px rgba(12, 19, 34, .13);
+}
+
+.panel-main {
+    padding: 18px;
+}
+
+.panel-side {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.panel-side:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.panel-head {
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(12, 19, 34, .08);
+    margin-bottom: 14px;
+}
+
+.panel-kicker {
+    font-size: 12px;
+    font-weight: 900;
+    color: rgba(12, 19, 34, .52);
+    letter-spacing: .2px;
+    margin-bottom: 6px;
+}
+
+/* ===== Airbnb-style step header ===== */
+.step-header {
+    margin-bottom: 18px;
+}
+
+.step-kicker {
+    font-size: 12px;
+    font-weight: 900;
+    color: rgba(12, 19, 34, .45);
+    letter-spacing: .2px;
+    margin-bottom: 6px;
+}
+
+.step-title {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 950;
+    letter-spacing: -.4px;
+    color: var(--ink);
+}
+
+.step-sub {
+    margin: 8px 0 0;
+    font-size: 14px;
+    font-weight: 750;
+    color: rgba(12, 19, 34, .55);
+}
+
+.title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 950;
+    letter-spacing: -.3px;
+}
+
+.sub {
+    margin: 10px 0 0;
+    color: rgba(12, 19, 34, .55);
+    font-weight: 750;
+    font-size: 13px;
+}
+
+/* ===== Cards grid ===== */
+.grid {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.card {
+    border: 1px solid rgba(12, 19, 34, .12);
+    border-radius: 16px;
+    padding: 12px 12px;
+    background: #fff;
+    text-align: left;
+    cursor: pointer;
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    min-height: 84px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow2);
+    border-color: rgba(31, 93, 255, .22);
+}
+
+.card.selected {
+    border-color: rgba(31, 93, 255, .55);
+    box-shadow: 0 18px 45px rgba(31, 93, 255, .14);
+}
+
+.card .card-ic {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 6px;
+    color: rgba(12, 19, 34, .85);
+    display: block;
+}
+
+.card .label {
+    font-weight: 950;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .86);
+}
+
+.card .desc {
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 750;
+    color: rgba(12, 19, 34, .55);
+    line-height: 1.35;
+}
+
+/* Step 1: bigger icons to utilize space */
+#typeGrid .card {
+    padding: 18px;
+    min-height: 104px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+}
+
+#typeGrid .card-ic {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 8px;
+}
+
+/* ===== Side stack ===== */
+.side-stack {
+    display: grid;
+    gap: 12px;
+    position: sticky;
+    top: 88px;
+}
+
+.mini-card {
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .86);
+    box-shadow: 0 14px 40px rgba(12, 19, 34, .08);
+    padding: 14px 14px 12px;
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+
+.mini-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(31, 93, 255, .18);
+    box-shadow: 0 18px 55px rgba(12, 19, 34, .11);
+}
+
+.mini-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(12, 19, 34, .08);
+    margin-bottom: 10px;
+}
+
+.mini-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 950;
+    font-size: 13px;
+    color: rgba(12, 19, 34, .82);
+}
+
+.mini-title svg {
+    width: 18px;
+    height: 18px;
+}
+
+.mini-pill {
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .75);
+    font-weight: 950;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .70);
+    white-space: nowrap;
+}
+
+.tips {
+    margin: 8px 0 0;
+    padding-left: 18px;
+    color: rgba(12, 19, 34, .60);
+    font-weight: 750;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.tips li {
+    margin: 6px 0;
+}
+
+/* readiness */
+.progress-track {
+    margin-top: 10px;
+    height: 6px;
+    background: rgba(12, 19, 34, .10);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(135deg, var(--blue), var(--blue2));
+    transition: width 380ms cubic-bezier(.2, .9, .2, 1);
+}
+
+.checklist {
+    margin-top: 12px;
+    display: grid;
+    gap: 10px;
+}
+
+.cl-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(12, 19, 34, .08);
+    background: rgba(255, 255, 255, .70);
+}
+
+.cl-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cl-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(12, 19, 34, .22);
+}
+
+.cl-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.cl-t {
+    font-weight: 950;
+    font-size: 12px;
+}
+
+.cl-s {
+    font-weight: 750;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .45);
+}
+
+.cl-state {
+    font-weight: 950;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .55);
+}
+
+.cl-item.active .cl-dot {
+    background: rgba(31, 93, 255, .75);
+}
+
+.cl-item.done .cl-dot {
+    background: rgba(34, 197, 94, .80);
+}
+
+.cl-item.locked .cl-dot {
+    background: rgba(12, 19, 34, .18);
+}
+
+.side-note {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 750;
+    color: rgba(12, 19, 34, .55);
+}
+
+/* ===== Footer ===== */
+.bottombar {
+    height: 78px;
+    border-top: 1px solid rgba(12, 19, 34, .08);
+    background: rgba(255, 255, 255, .82);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    position: sticky;
+    bottom: 0;
+    z-index: 30;
+}
+
+.progress-bottom {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(12, 19, 34, .16);
+}
+
+.dot.active {
+    background: rgba(31, 93, 255, .70);
+}
+
+.nav {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: 950;
+    cursor: pointer;
+    border: 1px solid rgba(12, 19, 34, .12);
+    background: #fff;
+    color: rgba(12, 19, 34, .72);
+    min-width: 92px;
+    transition: transform .15s ease, filter .15s ease, border-color .15s ease;
+}
+
+.btn:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn.ghost:hover {
+    border-color: rgba(31, 93, 255, .22);
+    transform: translateY(-1px);
+}
+
+.btn.solid {
+    border: none;
+    color: #fff;
+    background: #111;
+}
+
+.btn.solid:hover {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 980px) {
+    .page {
+        align-items: flex-start;
+    }
+
+    .stage-centered {
+        grid-template-columns: 1fr;
+    }
+
+    .side-stack {
+        position: static;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ===============================
+   STEP 2 – FORCE ROW LAYOUT
+   =============================== */
+
+#spaceGrid {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+}
+
+/* constrain width like Airbnb */
+#stepHost .step-header,
+#spaceGrid {
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#spaceGrid .card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    min-height: 96px;
+    text-align: left;
+    flex-direction: row !important;
+    border-radius: 14px;
+}
+
+#spaceGrid .card .label {
+    font-size: 15px;
+}
+
+#spaceGrid .card .desc {
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+#spaceGrid .card-ic {
+    width: 34px;
+    height: 34px;
+}
+
+/* ===============================
+   ICON MICRO-ANIMATION (ON SELECT)
+   =============================== */
+.card-ic {
+    transition: transform 260ms cubic-bezier(.2, .9, .2, 1), color 200ms ease;
+    transform-origin: center;
+}
+
+.card.selected .card-ic {
+    animation: icon-pop 360ms cubic-bezier(.2, .9, .2, 1);
+}
+
+@keyframes icon-pop {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.18) rotate(-4deg);
+    }
+
+    70% {
+        transform: scale(0.96) rotate(2deg);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* =========================
+   (Optional legacy) Location map styles
+   If you re-enable maps later
+   ========================= */
+.loc-stage {
+    max-width: 820px;
+    margin: 0 auto;
+}
+
+.loc-map {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .65);
+}
+
+.map-canvas {
+    height: 430px;
+}
+
+.map-placeholder {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: rgba(12, 19, 34, .65);
+}
+
+.map-placeholder.small {
+    font-size: 12px;
+}
+
+.mp-title {
+    font-weight: 900;
+    color: rgba(12, 19, 34, .82);
+}
+
+.mp-sub {
+    max-width: 460px;
+    text-align: center;
+    font-weight: 650;
+}
+
+.loc-searchbar {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .92);
+    box-shadow: 0 18px 40px rgba(12, 19, 34, .10);
+}
+
+.loc-ic {
+    width: 18px;
+    height: 18px;
+    opacity: .9;
+}
+
+.loc-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-weight: 750;
+    font-size: 14px;
+}
+
+/* ✅ IMPORTANT: scope the old "field with border-bottom" ONLY to loc-form */
+.loc-form .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(12, 19, 34, .08);
+}
+
+.loc-form .field:last-child {
+    border-bottom: none;
+}
+
+/* =========================
+   Step 3 form polish (FINAL)
+   ========================= */
+
+.formCard {
+    background: rgba(255, 255, 255, .78);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow);
+    padding: 22px;
+    backdrop-filter: blur(10px);
+}
+
+/* grid layout */
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field.full {
+    grid-column: 1 / -1;
+}
+
+.labelRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.field label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+.field input,
+.field select {
+    width: 100%;
+    padding: 14px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(12, 19, 34, .14);
+    background: rgba(255, 255, 255, .92);
+    color: var(--ink);
+    font: inherit;
+    outline: none;
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.field input:hover,
+.field select:hover {
+    transform: translateY(-1px);
+    border-color: rgba(12, 19, 34, .18);
+}
+
+.field input:focus,
+.field select:focus {
+    border-color: rgba(31, 93, 255, .65);
+    box-shadow: 0 0 0 4px rgba(31, 93, 255, .12);
+    transform: translateY(-1px);
+}
+
+/* ✅ Custom select wrapper (cleaner + chevron animation) */
+.selectWrap {
+    position: relative;
+}
+
+.selectWrap select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 52px;
+    cursor: pointer;
+}
+
+/* Chevron */
+.selectWrap::after {
+    content: "";
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid rgba(12, 19, 34, .55);
+    border-bottom: 2px solid rgba(12, 19, 34, .55);
+    transform: translateY(-50%) rotate(45deg);
+    pointer-events: none;
+    transition: transform .18s ease, opacity .18s ease;
+    opacity: .85;
+}
+
+.selectWrap:focus-within::after {
+    transform: translateY(-50%) rotate(225deg);
+    opacity: 1;
+}
+
+/* Divider */
+.divider.full {
+    height: 1px;
+    background: rgba(12, 19, 34, .08);
+    margin: 4px 0;
+}
+
+/* Preview */
+.previewTitle {
+    font-weight: 900;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .70);
+}
+
+.previewLine {
+    font-weight: 850;
+    margin-top: 6px;
+    color: rgba(12, 19, 34, .90);
+}
+
+.previewHint {
+    margin-top: 4px;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .55);
+}
+
+/* Tooltip icon (Metro Manila scope) */
+.hintIcon {
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(12, 19, 34, .14);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: rgba(12, 19, 34, .55);
+    cursor: help;
+    position: relative;
+    transition: transform .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.hintIcon:hover,
+.hintIcon:focus {
+    transform: translateY(-1px);
+    border-color: rgba(31, 93, 255, .35);
+    color: rgba(31, 93, 255, .85);
+    outline: none;
+}
+
+.hintIcon::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    transform: translate(-50%, -100%);
+    width: 270px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(12, 19, 34, .92);
+    color: rgba(255, 255, 255, .92);
+    font-size: 12px;
+    line-height: 1.35;
+    box-shadow: 0 16px 40px rgba(12, 19, 34, .22);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .16s ease, transform .16s ease;
+}
+
+.hintIcon::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    transform: translate(-50%, -2px);
+    border: 8px solid transparent;
+    border-top-color: rgba(12, 19, 34, .92);
+    opacity: 0;
+    transition: opacity .16s ease;
+}
+
+.hintIcon:hover::after,
+.hintIcon:focus::after {
+    opacity: 1;
+    transform: translate(-50%, -110%);
+}
+
+.hintIcon:hover::before,
+.hintIcon:focus::before {
+    opacity: 1;
+}
+
+@media (max-width: 980px) {
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Bg moving blobs by JS */
+.bg .glow {
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bg .glow {
+        transform: none !important;
+    }
+}
+
+
+/* ===== Step 4 – Capacity ===== */
+.capCard {
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.cap-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+}
+
+.cap-row:last-child {
+    border-bottom: none;
+}
+
+.cap-left {
+    max-width: 60%;
+}
+
+.cap-title {
+    font-weight: 900;
+}
+
+.cap-sub {
+    font-size: 12px;
+    color: rgba(0, 0, 0, .55);
+    margin-top: 4px;
+}
+
+.cap-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.cap-value {
+    font-weight: 800;
+}
+
+.cap-stepper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.step-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, .14);
+    background: #fff;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.step-val {
+    min-width: 32px;
+    text-align: center;
+    font-weight: 800;
+}
+
+/* placeholder readable */
+.formCard input::placeholder,
+.field input::placeholder {
+    color: rgba(12, 19, 34, .45);
+}
+
+/* keep background stable on hover */
+.formCard input:hover,
+.formCard select:hover,
+.field input:hover,
+.field select:hover {
+    background: rgba(255, 255, 255, .92);
+}
+
+/* =========================
+   Step 4: +/- hover polish
+   ========================= */
+.qtyBtn {
+    position: relative;
+    overflow: hidden;
+    transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease, background .14s ease;
+}
+
+.qtyBtn:hover {
+    transform: translateY(-1px) scale(1.04);
+    border-color: rgba(31, 93, 255, .28);
+    box-shadow: 0 12px 24px rgba(12, 19, 34, .10);
+}
+
+.qtyBtn:active {
+    transform: translateY(0) scale(.98);
+    box-shadow: 0 8px 16px rgba(12, 19, 34, .10);
+}
+
+/* subtle shine sweep */
+.qtyBtn::after {
+    content: "";
+    position: absolute;
+    inset: -40% -60%;
+    background: linear-gradient(120deg, transparent 35%, rgba(31, 93, 255, .12), transparent 65%);
+    transform: translateX(-40%) rotate(10deg);
+    opacity: 0;
+    transition: opacity .18s ease, transform .28s ease;
+    pointer-events: none;
+}
+
+.qtyBtn:hover::after {
+    opacity: 1;
+    transform: translateX(40%) rotate(10deg);
+}
+
+/* =========================
+   Step 4: Bathrooms title row
+   ========================= */
+.cap-titleRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* tooltip icon (re-use your style but tuned for Step 4 spacing) */
+.cap-titleRow .hintIcon {
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(12, 19, 34, .14);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 900;
+    color: rgba(12, 19, 34, .55);
+    background: rgba(255, 255, 255, .85);
+    cursor: help;
+    position: relative;
+    transition: transform .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.cap-titleRow .hintIcon:hover,
+.cap-titleRow .hintIcon:focus {
+    transform: translateY(-1px);
+    border-color: rgba(31, 93, 255, .35);
+    color: rgba(31, 93, 255, .85);
+    outline: none;
+}
+
+.cap-titleRow .hintIcon::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    transform: translate(-50%, -100%);
+    width: 280px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(12, 19, 34, .92);
+    color: rgba(255, 255, 255, .92);
+    font-size: 12px;
+    line-height: 1.35;
+    box-shadow: 0 16px 40px rgba(12, 19, 34, .22);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .16s ease, transform .16s ease;
+    z-index: 50;
+}
+
+.cap-titleRow .hintIcon::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    transform: translate(-50%, -2px);
+    border: 8px solid transparent;
+    border-top-color: rgba(12, 19, 34, .92);
+    opacity: 0;
+    transition: opacity .16s ease;
+    z-index: 51;
+}
+
+.cap-titleRow .hintIcon:hover::after,
+.cap-titleRow .hintIcon:focus::after {
+    opacity: 1;
+    transform: translate(-50%, -112%);
+}
+
+.cap-titleRow .hintIcon:hover::before,
+.cap-titleRow .hintIcon:focus::before {
+    opacity: 1;
+}
+
+/* =========================
+   STEP 5 – Amenities (Tabs)
+   ========================= */
+.amenShell {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.amenTabs {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 6px;
+    border-radius: 999px;
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .72);
+    box-shadow: 0 14px 34px rgba(12, 19, 34, .08);
+    backdrop-filter: blur(10px);
+}
+
+.amenTab {
+    position: relative;
+    z-index: 2;
+    border: none;
+    background: transparent;
+    padding: 10px 12px;
+    border-radius: 999px;
+    font-weight: 950;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .62);
+    cursor: pointer;
+    transition: transform .14s ease, color .14s ease;
+}
+
+.amenTab:hover {
+    transform: translateY(-1px);
+    color: rgba(12, 19, 34, .80);
+}
+
+.amenTab.isActive {
+    color: rgba(12, 19, 34, .90);
+}
+
+.amenIndicator {
+    position: absolute;
+    inset: 6px auto 6px 6px;
+    width: 33%;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .90);
+    box-shadow: 0 16px 40px rgba(12, 19, 34, .10);
+    border: 1px solid rgba(12, 19, 34, .08);
+    transition: transform 420ms cubic-bezier(.2, .9, .2, 1), width 420ms cubic-bezier(.2, .9, .2, 1);
+    z-index: 1;
+}
+
+.amenPanel {
+    margin-top: 14px;
+}
+
+.amenMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 14px 0 10px;
+}
+
+.amenTitle {
+    font-weight: 950;
+    font-size: 14px;
+    color: rgba(12, 19, 34, .90);
+}
+
+.amenHint {
+    font-weight: 750;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .55);
+}
+
+/* Amenity cards: reuse your .card but tighten spacing */
+.amenCard {
+    min-height: 92px;
+}
+
+.amenCard .card-ic {
+    width: 34px;
+    height: 34px;
+}
+
+/* footer */
+.amenFooter {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(12, 19, 34, .08);
+}
+
+.amenCount {
+    font-weight: 900;
+    color: rgba(12, 19, 34, .75);
+}
+
+.amenNote {
+    font-weight: 750;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .50);
+}
+
+/* =========================
+   STEP 5 – Search + Scroll
+   ========================= */
+.amenTop {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 12px;
+}
+
+.amenSearch {
+    flex: 0 0 320px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .82);
+    box-shadow: 0 12px 28px rgba(12, 19, 34, .08);
+    backdrop-filter: blur(10px);
+    transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease;
+}
+
+.amenSearch:hover {
+    transform: translateY(-1px);
+    border-color: rgba(31, 93, 255, .18);
+    box-shadow: 0 16px 36px rgba(12, 19, 34, .10);
+}
+
+.amenSearchIc {
+    width: 18px;
+    height: 18px;
+    opacity: .75;
+}
+
+.amenSearchInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-weight: 800;
+    font-size: 13px;
+    color: rgba(12, 19, 34, .85);
+}
+
+.amenSearchClear {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .85);
+    cursor: pointer;
+    font-weight: 900;
+    line-height: 0;
+    display: grid;
+    place-items: center;
+    opacity: .35;
+    transition: transform .14s ease, opacity .14s ease, border-color .14s ease;
+}
+
+.amenSearchClear:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    border-color: rgba(31, 93, 255, .22);
+}
+
+/* This is the key: scroll area inside step (no page stretching) */
+.amenScroll {
+    margin-top: 10px;
+    padding-right: 4px;
+    /* space for scrollbar */
+    overflow: auto;
+    border-radius: 14px;
+    /* fit inside viewport: header + tabs + footer are fixed/sticky */
+    max-height: calc(100vh - 64px - 78px - 220px);
+}
+
+/* nice scrollbar */
+.amenScroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+.amenScroll::-webkit-scrollbar-thumb {
+    background: rgba(12, 19, 34, .16);
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, .75);
+}
+
+.amenScroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(12, 19, 34, .22);
+}
+
+/* empty state */
+.amenEmpty {
+    border: 1px dashed rgba(12, 19, 34, .16);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .75);
+    padding: 22px;
+    text-align: center;
+    color: rgba(12, 19, 34, .65);
+}
+
+.amenEmptyTitle {
+    font-weight: 950;
+    margin-bottom: 6px;
+    color: rgba(12, 19, 34, .85);
+}
+
+.amenEmptySub {
+    font-weight: 750;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .55);
+}
+
+@media (max-width: 980px) {
+    .amenTop {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .amenSearch {
+        flex: 1 1 auto;
+    }
+
+    .amenScroll {
+        max-height: calc(100vh - 64px - 78px - 260px);
+    }
+}
+
+
+/* =========================
+   STEP 6 – Highlights (chips)
+   ========================= */
+.hlShell {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.hlTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.hlSearch {
+    flex: 1;
+    max-width: 420px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .82);
+    box-shadow: 0 12px 28px rgba(12, 19, 34, .08);
+    backdrop-filter: blur(10px);
+    transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease;
+}
+
+.hlSearch:hover {
+    transform: translateY(-1px);
+    border-color: rgba(31, 93, 255, .18);
+    box-shadow: 0 16px 36px rgba(12, 19, 34, .10);
+}
+
+.hlSearchIc {
+    width: 18px;
+    height: 18px;
+    opacity: .75;
+}
+
+.hlSearchInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-weight: 800;
+    font-size: 13px;
+    color: rgba(12, 19, 34, .85);
+}
+
+.hlSearchClear {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .85);
+    cursor: pointer;
+    font-weight: 900;
+    line-height: 0;
+    display: grid;
+    place-items: center;
+    opacity: .35;
+    transition: transform .14s ease, opacity .14s ease, border-color .14s ease;
+}
+
+.hlSearchClear:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    border-color: rgba(31, 93, 255, .22);
+}
+
+.hlCounter {
+    font-weight: 950;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .70);
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .70);
+    padding: 9px 12px;
+    border-radius: 999px;
+}
+
+.hlChips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 4px;
+}
+
+.hlChip {
+    border: 1px solid rgba(12, 19, 34, .12);
+    background: rgba(255, 255, 255, .86);
+    border-radius: 999px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .78);
+    transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+}
+
+.hlChip:hover {
+    transform: translateY(-1px);
+    border-color: rgba(31, 93, 255, .22);
+    box-shadow: 0 14px 30px rgba(12, 19, 34, .10);
+}
+
+.hlChip.selected {
+    border-color: rgba(31, 93, 255, .55);
+    box-shadow: 0 18px 45px rgba(31, 93, 255, .14);
+}
+
+.hlIc {
+    width: 18px;
+    height: 18px;
+    opacity: .9;
+}
+
+.hlChip.selected .hlIc {
+    animation: icon-pop 360ms cubic-bezier(.2, .9, .2, 1);
+}
+
+.hlChip.shake {
+    animation: chip-shake 240ms ease;
+}
+
+@keyframes chip-shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    30% {
+        transform: translateX(-3px);
+    }
+
+    60% {
+        transform: translateX(3px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.hlNote {
+    margin-top: 8px;
+    font-weight: 750;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .55);
+}
+
+
+/* =========================
+   STEP 7 – Photos
+   ========================= */
+.photoShell {
+    max-width: 820px;
+    margin: 0 auto;
+    display: grid;
+    gap: 14px;
+}
+
+.uploadZone {
+    border-radius: 18px;
+    border: 1px dashed rgba(12, 19, 34, .18);
+    background: rgba(255, 255, 255, .75);
+    box-shadow: 0 16px 40px rgba(12, 19, 34, .06);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+    transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease;
+}
+
+.uploadZone:hover {
+    transform: translateY(-1px);
+    border-color: rgba(31, 93, 255, .28);
+    box-shadow: 0 20px 55px rgba(12, 19, 34, .08);
+}
+
+.uploadZone.drag {
+    border-color: rgba(31, 93, 255, .55);
+    background: rgba(31, 93, 255, .06);
+}
+
+.uzTop {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.uzIc {
+    width: 22px;
+    height: 22px;
+    opacity: .85;
+}
+
+.uzTitle {
+    font-weight: 950;
+}
+
+.uzSub {
+    font-weight: 750;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .55);
+    margin-top: 3px;
+}
+
+.uzBtn {
+    align-self: flex-start;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-weight: 950;
+    border: 1px solid rgba(12, 19, 34, .12);
+    background: #fff;
+    cursor: pointer;
+    transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease;
+}
+
+.uzBtn:hover {
+    transform: translateY(-1px);
+    border-color: rgba(31, 93, 255, .22);
+    box-shadow: 0 14px 30px rgba(12, 19, 34, .10);
+}
+
+.uzMeta {
+    font-size: 12px;
+    font-weight: 750;
+    color: rgba(12, 19, 34, .55);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.dotSep {
+    opacity: .5;
+}
+
+.thumbGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.thumb {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .9);
+    box-shadow: 0 14px 35px rgba(12, 19, 34, .08);
+    transition: transform .14s ease, box-shadow .14s ease;
+}
+
+.thumb:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 45px rgba(12, 19, 34, .10);
+}
+
+.thumb img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    display: block;
+}
+
+.coverTag {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(12, 19, 34, .88);
+    color: rgba(255, 255, 255, .92);
+    font-weight: 950;
+    font-size: 12px;
+    z-index: 2;
+}
+
+.thumbBar {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px;
+}
+
+.tBtn {
+    flex: 1;
+    border-radius: 12px;
+    padding: 9px 10px;
+    font-weight: 950;
+    font-size: 12px;
+    border: 1px solid rgba(12, 19, 34, .12);
+    background: #fff;
+    cursor: pointer;
+    transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease;
+}
+
+.tBtn:hover {
+    transform: translateY(-1px);
+    border-color: rgba(31, 93, 255, .22);
+    box-shadow: 0 12px 26px rgba(12, 19, 34, .10);
+}
+
+.tBtn.danger:hover {
+    border-color: rgba(239, 68, 68, .35);
+}
+
+.vtCard {
+    border-radius: 18px;
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .78);
+    box-shadow: 0 14px 40px rgba(12, 19, 34, .08);
+    padding: 14px;
+}
+
+.vtHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.vtTitle {
+    font-weight: 950;
+}
+
+.vtSub {
+    font-weight: 750;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .55);
+    margin-top: 2px;
+}
+
+.vtToggle {
+    width: 46px;
+    height: 28px;
+    border-radius: 999px;
+    border: 1px solid rgba(12, 19, 34, .12);
+    background: rgba(12, 19, 34, .10);
+    cursor: pointer;
+    position: relative;
+    transition: background .16s ease, border-color .16s ease;
+}
+
+.vtToggle .vtKnob {
+    position: absolute;
+    top: 50%;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: #fff;
+    transform: translateY(-50%);
+    transition: transform .18s cubic-bezier(.2, .9, .2, 1);
+}
+
+.vtToggle.on {
+    background: rgba(31, 93, 255, .28);
+    border-color: rgba(31, 93, 255, .22);
+}
+
+.vtToggle.on .vtKnob {
+    transform: translate(18px, -50%);
+}
+
+.vtBody {
+    margin-top: 12px;
+}
+
+.vtLabel {
+    display: block;
+    font-size: 12px;
+    font-weight: 850;
+    color: rgba(12, 19, 34, .60);
+    margin-bottom: 8px;
+}
+
+.vtInput {
+    width: 100%;
+    height: 44px;
+    border-radius: 14px;
+    border: 1px solid rgba(12, 19, 34, .14);
+    background: rgba(255, 255, 255, .92);
+    padding: 0 14px;
+    font-weight: 750;
+    outline: none;
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.vtInput:focus {
+    border-color: rgba(31, 93, 255, .65);
+    box-shadow: 0 0 0 4px rgba(31, 93, 255, .12);
+    transform: translateY(-1px);
+}
+
+.vtHint {
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 750;
+    color: rgba(12, 19, 34, .55);
+}
+
+@media (max-width: 980px) {
+    .thumbGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* =========================
+   STEP 8 – Title + Description
+   ========================= */
+.detShell {
+    max-width: 820px;
+    margin: 0 auto;
+    display: grid;
+    gap: 14px;
+}
+
+.detCard {
+    border-radius: 18px;
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .78);
+    box-shadow: 0 14px 40px rgba(12, 19, 34, .08);
+    padding: 16px;
+}
+
+.detHead {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(12, 19, 34, .08);
+    margin-bottom: 12px;
+}
+
+.detTitle {
+    font-weight: 950;
+}
+
+.detSub {
+    margin-top: 3px;
+    font-weight: 750;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .55);
+}
+
+.detCount {
+    font-weight: 950;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .70);
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .70);
+    padding: 8px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.detInput {
+    width: 100%;
+    height: 46px;
+    border-radius: 14px;
+    border: 1px solid rgba(12, 19, 34, .14);
+    background: rgba(255, 255, 255, .92);
+    padding: 0 14px;
+    font-weight: 850;
+    outline: none;
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.detInput:focus {
+    border-color: rgba(31, 93, 255, .65);
+    box-shadow: 0 0 0 4px rgba(31, 93, 255, .12);
+    transform: translateY(-1px);
+}
+
+.detTextarea {
+    width: 100%;
+    min-height: 160px;
+    resize: vertical;
+    border-radius: 14px;
+    border: 1px solid rgba(12, 19, 34, .14);
+    background: rgba(255, 255, 255, .92);
+    padding: 12px 14px;
+    font-weight: 750;
+    outline: none;
+    line-height: 1.45;
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.detTextarea:focus {
+    border-color: rgba(31, 93, 255, .65);
+    box-shadow: 0 0 0 4px rgba(31, 93, 255, .12);
+    transform: translateY(-1px);
+}
+
+.detHint {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 750;
+    color: rgba(12, 19, 34, .55);
+}
+
+.detPreview {
+    margin-top: 4px;
+}
+
+.pvTitle {
+    font-weight: 950;
+    font-size: 12px;
+    color: rgba(12, 19, 34, .70);
+    margin-bottom: 8px;
+}
+
+.pvCard {
+    border-radius: 18px;
+    border: 1px solid rgba(12, 19, 34, .10);
+    background: rgba(255, 255, 255, .70);
+    box-shadow: 0 12px 30px rgba(12, 19, 34, .08);
+    padding: 14px;
+}
+
+.pvH {
+    font-weight: 950;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.pvP {
+    font-weight: 750;
+    font-size: 12.5px;
+    color: rgba(12, 19, 34, .62);
+    line-height: 1.45;
+}
+
+
+/* invisible caret/cursor on hover/focus ===== */
+.formCard input,
+.formCard select,
+.field input,
+.field select {
+    color: var(--ink) !important;
+    caret-color: var(--ink) !important;
+    -webkit-text-fill-color: var(--ink) !important;
+    /* fixes some browsers */
+    cursor: text;
+}
+
+/* invisible caret/cursor on hover/focus ===== */
+.formCard input,
+.formCard select,
+.field input,
+.field select {
+    color: var(--ink) !important;
+    caret-color: var(--ink) !important;
+    -webkit-text-fill-color: var(--ink) !important;
+    /* fixes some browsers */
+    cursor: text;
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>VISTA-HR | Property Owner Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+    <!-- ✅ use local lucide to avoid unpkg 404 -->
+    <script src="/PO-after-signup/listing-wizard/vendor/lucide.min.js"></script>
+
+    <!-- ✅ reuse wizard vibe -->
+    <link rel="stylesheet" href="/PO-after-signup/listing-wizard/wizard.css" />
+    <link rel="stylesheet" href="/Property-Owner/dashboard/property-owner-dashboard.css" />
+
+</head>
+
+<body>
+    <!-- BG (same vibe) -->
+    <div class="bg" aria-hidden="true">
+        <div class="bg-grid"></div>
+        <div class="glow g1"></div>
+        <div class="glow g2"></div>
+    </div>
+
+    <header class="topbar">
+        <div class="brand">
+            <span class="logo-box"></span>
+            <span class="brand-text">VISTA<span>-HR</span></span>
+        </div>
+
+        <div class="top-actions">
+            <button class="chip" id="btnHelp" type="button">Help</button>
+            <button class="chip primary" id="btnNewListing" type="button">Create listing</button>
+        </div>
+    </header>
+
+    <main class="dash">
+        <div class="dashShell">
+            <div class="dashHead">
+                <div>
+                    <div class="dashKicker">Property owner</div>
+                    <h1 class="dashTitle">Dashboard</h1>
+                    <p class="dashSub">Manage your listings, bookings, and messages.</p>
+                </div>
+
+                <div class="dashTabs" role="tablist">
+                    <button class="dashTab isActive" data-tab="listings" type="button">
+                        <i data-lucide="home"></i><span>Listings</span>
+                    </button>
+                    <button class="dashTab" data-tab="calendar" type="button">
+                        <i data-lucide="calendar-days"></i><span>Calendar</span>
+                    </button>
+                    <button class="dashTab" data-tab="messages" type="button">
+                        <i data-lucide="messages-square"></i><span>Messages</span>
+                    </button>
+                    <span class="dashIndicator" id="dashIndicator"></span>
+                </div>
+            </div>
+
+            <!-- Listings -->
+            <section class="dashPanel isActive" id="tab-listings">
+                <div class="panelTop">
+                    <div class="panelTitle">Your listings</div>
+                    <div class="panelActions">
+                        <button class="btn ghost" id="btnClearDraft" type="button">Clear draft</button>
+                        <button class="btn solid" id="btnContinue" type="button">Continue</button>
+                    </div>
+                </div>
+
+                <div class="listingGrid" id="listingGrid"></div>
+            </section>
+
+            <!-- Calendar -->
+            <section class="dashPanel" id="tab-calendar">
+                <div class="emptyState">
+                    <div class="emptyIcon"><i data-lucide="calendar-days"></i></div>
+                    <div class="emptyTitle">Calendar (next)</div>
+                    <div class="emptySub">We’ll show booked dates per listing here (mock first, backend later).</div>
+                </div>
+            </section>
+
+            <!-- Messages -->
+            <section class="dashPanel" id="tab-messages">
+                <div class="emptyState">
+                    <div class="emptyIcon"><i data-lucide="messages-square"></i></div>
+                    <div class="emptyTitle">Messages (next)</div>
+                    <div class="emptySub">We’ll add inbox + chat UI here (mock first, realtime later).</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- ✅ IMPORTANT: load the same store.js used by wizard -->
+    <!-- lucide (LOCAL) -->
+    <script src="/PO-after-signup/listing-wizard/vendor/lucide.min.js"></script>
+
+    <!-- IMPORTANT: load ListingStore -->
+    <script src="/PO-after-signup/listing-wizard/core/store.js"></script>
+    <script src="property-owner-dashboard.js"></script>
+
+
+    </script>
+</body>
+
+</html>

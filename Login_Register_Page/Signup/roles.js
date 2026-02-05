@@ -4,21 +4,19 @@ const btnOwner = document.getElementById("btnOwner");
 const btnResident = document.getElementById("btnResident");
 const backBtn = document.getElementById("backBtn");
 
-function exitTo(url) {
-    document.body.classList.add("page-exit");
-    setTimeout(() => window.location.href = url, 320);
+function safeGoTo(url) {
+    if (typeof goTo === "function") goTo(url);
+    else window.location.href = url;
 }
 
 btnOwner.addEventListener("click", () => {
-    // next page for unit types
-    exitTo("./unit_type.html");
+    safeGoTo("./property-owner/owner_signup.html");
 });
 
 btnResident.addEventListener("click", () => {
-    // for now resident flow placeholder
-    exitTo("./resident/resident_signup.html");
+    safeGoTo("./Resident-SignUp/resident.html");
 });
 
 backBtn.addEventListener("click", () => {
-    exitTo("/Landing_Page/ASSETS/front_index.html");
+    safeGoTo("../../Landing_Page/ASSETS/front_index.html");
 });

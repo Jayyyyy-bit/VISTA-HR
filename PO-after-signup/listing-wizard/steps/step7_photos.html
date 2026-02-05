@@ -1,0 +1,50 @@
+<div class="step-header">
+    <div class="step-kicker">Create listing • Step 7</div>
+    <h1 class="step-title">Add photos of your place</h1>
+    <p class="step-sub">Upload at least 5 photos. The first (cover) photo appears in search.</p>
+</div>
+
+<section class="photoShell">
+    <!-- Upload zone -->
+    <div class="uploadZone" id="uploadZone" tabindex="0">
+        <div class="uzTop">
+            <i class="uzIc" data-lucide="images"></i>
+            <div class="uzText">
+                <div class="uzTitle">Drag & drop photos here</div>
+                <div class="uzSub">or click to upload (JPG/PNG/WebP)</div>
+            </div>
+        </div>
+
+        <input id="photoInput" type="file" accept="image/*" multiple hidden />
+        <button class="uzBtn" id="uploadBtn" type="button">Choose files</button>
+
+        <div class="uzMeta">
+            <span id="photoCountLabel">0 / 5 minimum</span>
+            <span class="dotSep">•</span>
+            <span>Tip: bright, wide shots get more bookings</span>
+        </div>
+    </div>
+
+    <!-- Thumbs -->
+    <div class="thumbGrid" id="thumbGrid"></div>
+
+    <!-- 360 (future-proof) -->
+    <div class="vtCard">
+        <div class="vtHead">
+            <div>
+                <div class="vtTitle">Virtual tour (360)</div>
+                <div class="vtSub">Optional. Add later when enabled.</div>
+            </div>
+
+            <button class="vtToggle" id="vtToggle" type="button" aria-pressed="false">
+                <span class="vtKnob"></span>
+            </button>
+        </div>
+
+        <div class="vtBody" id="vtBody" hidden>
+            <label class="vtLabel">360 tour link</label>
+            <input id="vtUrl" class="vtInput" type="url" placeholder="https://..." />
+            <div class="vtHint">For now, you can paste a hosted panorama link. We’ll support 360 uploads later.</div>
+        </div>
+    </div>
+</section>
